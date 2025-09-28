@@ -1,8 +1,4 @@
-Here’s your content rewritten clearly and formatted properly as a **GitHub-friendly Markdown (.md) file**, with simplified explanations and correct formatting for easy understanding:
 
----
-
-````markdown
 ## 📅 Date: 2025-09-28
 
 ### ✅ Task

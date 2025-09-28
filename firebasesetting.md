@@ -1,8 +1,4 @@
-Here’s your second log entry, rewritten clearly and formatted in Markdown for GitHub. It uses **simple language**, includes **clean code blocks**, and is structured for easy understanding — perfect for your daily learning log.
 
----
-
-```markdown
 ## 📅 Date: 2025-09-28
 
 ### 🐞 Problem
@@ -107,16 +103,3 @@ flutter run -d chrome
 
 ---
 
-### 🧘 Reflection
-
-* Firebase setup for web is **not automatic** — you must use `FirebaseOptions`.
-* The Flutter error message was clear, and following the console's recommendations helped.
-
-```
-
----
-
-This version is ready to be copied into your `2025-09-28.md` file in your GitHub log repo.
-
-Would you like me to bundle both logs into a single `.md` file for you?
-```
