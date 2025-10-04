@@ -508,3 +508,113 @@ git checkout -b feature-login origin/feature-login
 * Creates local branch from remote
 
 ---
+
+---
+
+# 📘 GitHub Cheat Sheet
+
+**Date**: 2025-10-04
+
+---
+
+## 🧑‍🏫 Part 4: Undo & Reset (Fixing Mistakes)
+
+One of the best parts of Git is that **you can always go back**.
+If you make a mistake — don’t panic 🚨 — Git keeps history safe.
+
+---
+
+## 🔹 Common Scenarios & Solutions
+
+### 1. **Unstaged changes → discard (go back to last saved)**
+
+```bash
+git checkout -- filename.txt
+```
+
+* Discards changes in a file
+* Works only if file was modified but **not staged**
+
+---
+
+### 2. **Staged file → unstage it**
+
+```bash
+git reset filename.txt
+```
+
+* Moves file back from **staged** → **unstaged**
+
+---
+
+### 3. **Discard ALL local changes (dangerous 🚨)**
+
+```bash
+git reset --hard HEAD
+```
+
+* Resets your repo to the last commit
+* **All unsaved changes are lost**
+
+---
+
+### 4. **Undo the last commit but keep changes**
+
+```bash
+git reset --soft HEAD~1
+```
+
+* Moves back one commit
+* Your code stays in working directory (unstaged)
+
+---
+
+### 5. **Undo the last commit completely (and lose changes)**
+
+```bash
+git reset --hard HEAD~1
+```
+
+* Deletes last commit + changes
+
+---
+
+### 6. **Undo safely by creating a new commit**
+
+```bash
+git revert <commit-id>
+```
+
+* Creates a new commit that **reverses** changes of the chosen commit
+* Safer than reset (keeps history)
+
+---
+
+### 7. **Check history for commits**
+
+```bash
+git log --oneline
+```
+
+Find commit IDs (like `a1b2c3d`) to use with `reset` or `revert`.
+
+---
+
+## ⚠️ Golden Rules
+
+* Use **`git revert`** if changes are already pushed to GitHub (safe).
+* Use **`git reset`** only for local work that hasn’t been shared yet.
+* `--hard` = destroys changes, be careful ⚡
+* Git never really “loses” commits immediately — you can often recover with `git reflog`.
+
+---
+
+✅ **Summary**:
+
+* Small mistake? → `git checkout -- file`
+* Staged by accident? → `git reset file`
+* Bad commit locally? → `git reset`
+* Bad commit already pushed? → `git revert`
+
+---
+
