@@ -116,8 +116,169 @@ Git used to default to `master`. Now, `main` is the standard.
 * It applies to **all your Git projects** on that machine.
 
 ---
+## Q:Why after global setup need to authentication every time?
 
 
+👉 Global Setup only sets your **identity** (who made the commit).
+It does **not** store your GitHub login credentials.
+
+That’s why when you push a repo (`git push`), Git asks for **GitHub username & password (or token)**.
+
+---
+
+## 🔹 Why this happens
+
+1. **Global setup ≠ authentication**
+
+   * Git knows your name/email but not your GitHub account password.
+
+2. **GitHub disabled password authentication**
+
+   * Since 2021, GitHub no longer allows normal passwords for `git push`.
+   * You must use a **Personal Access Token (PAT)** or **SSH keys**.
+
+---
+
+## ✅ Solutions
+
+### Option 1: Use HTTPS with Personal Access Token
+
+1. Generate a token in GitHub:
+
+   * Go to **GitHub → Settings → Developer Settings → Personal Access Tokens → Tokens (classic)**
+   * Click **Generate new token**
+   * Select scopes: `repo`, `workflow` (minimum for pushing code)
+   * Copy the token
+
+2. When Git asks for **username & password**:
+
+   * Username → your GitHub username
+   * Password → paste the **token** (not your real password)
+
+3. To avoid typing it every time, **cache credentials**:
+
+```bash
+git config --global credential.helper store
+```
+
+Now Git will remember your token.
+
+---
+👍 This is an important difference to understand:
+
+---
+
+# 🔹 `credential.helper store` vs `credential.helper cache`
+
+Both are ways for Git to **remember your credentials**, but they work differently.
+
+---
+
+## 🧑‍🏫 1. `store`
+
+```bash
+git config --global credential.helper store
+```
+
+* Saves your credentials in a **file**:
+
+  * Linux/Mac → `~/.git-credentials`
+  * Windows → `%USERPROFILE%\.git-credentials`
+* Stored in **plain text** (⚠️ not encrypted).
+* **Permanent** → credentials are reused every time, until you manually remove them.
+* Good if you don’t want to type every time, but less secure.
+
+✅ Example entry in the file:
+
+```
+https://username:PERSONAL_ACCESS_TOKEN@github.com
+```
+
+---
+
+## 🧑‍🏫 2. `cache`
+
+```bash
+git config --global credential.helper cache
+```
+
+* Stores your credentials in **memory (RAM)**, not in a file.
+* Only lasts for a **default timeout of 15 minutes**.
+* After that, Git will ask again.
+* Safer because it’s temporary, but less convenient.
+
+👉 You can change the timeout (in seconds):
+
+```bash
+git config --global credential.helper 'cache --timeout=3600'
+```
+
+This keeps credentials for **1 hour**.
+
+---
+
+## 🔍 Quick Comparison
+
+| Feature          | `store` 🗂️                 | `cache` ⏱️                               |
+| ---------------- | --------------------------- | ---------------------------------------- |
+| **Where stored** | File (`.git-credentials`)   | In memory (RAM)                          |
+| **Security**     | ❌ Plain text (unsafe)       | ✅ Safer (not saved permanently)          |
+| **Duration**     | Permanent                   | Temporary (default 15 min, configurable) |
+| **Use case**     | Convenience, one-time setup | Short-term use, shared machines          |
+
+---
+
+✅ **Best Practice**
+
+* Use **SSH keys** or **Personal Access Token (PAT)** with `store` on **personal machine**.
+* Use **cache** on **shared/public computers** where permanent storage is risky.
+
+---
+### Option 2: Use SSH Keys (Recommended 🔑)
+
+1. Generate SSH key:
+
+```bash
+ssh-keygen -t ed25519 -C "your_email@example.com"
+```
+
+2. Start SSH agent & add key:
+
+```bash
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519
+```
+
+3. Copy your key to GitHub:
+
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+Copy the output → paste into **GitHub → Settings → SSH and GPG Keys → Add new SSH key**.
+
+4. Test connection:
+
+```bash
+ssh -T git@github.com
+```
+
+5. Change remote from HTTPS → SSH:
+
+```bash
+git remote set-url origin git@github.com:username/repo.git
+```
+
+Now no password needed 🎉
+
+---
+
+👉 So:
+
+* **Global setup = author identity**
+* **Token/SSH = authentication to GitHub**
+
+---
 
 ## 🧑‍🏫 What is a Repository (Repo)?
 
