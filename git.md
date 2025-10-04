@@ -233,3 +233,117 @@ git remote rename old-name new-name
 
 
 
+Great 👍 Let’s continue in the **same style**.
+Here’s **Part 3: Branching in Git/GitHub** 🚀
+
+---
+
+**Date**: 2025-10-04
+
+---
+
+## 🧑‍🏫 Part 3: Branching
+
+A **branch** is like a **separate workspace** where you can experiment, fix bugs, or add features **without affecting the main code**.
+
+* The default branch is usually **`main`**.
+* You can create as many branches as you need.
+* When finished, you **merge** a branch back into `main`.
+
+---
+
+## 🔹 Why Use Branches?
+
+* Work on **new features** without breaking main code
+* Fix bugs independently
+* Multiple developers can work in **parallel**
+* Keeps code history organized
+
+---
+
+## 🔧 Branch Commands
+
+### 1. **List all branches**
+
+```bash
+git branch
+```
+
+* Shows current branch (marked with `*`)
+
+---
+
+### 2. **Create a new branch**
+
+```bash
+git branch feature-login
+```
+
+* Creates branch `feature-login`
+
+---
+
+### 3. **Switch to a branch**
+
+```bash
+git checkout feature-login
+```
+
+* Moves to branch `feature-login`
+
+---
+
+### 4. **Create & switch (shortcut)**
+
+```bash
+git checkout -b feature-login
+```
+
+* Creates AND switches in one step
+
+---
+
+### 5. **Merge a branch into main**
+
+```bash
+git checkout main
+git merge feature-login
+```
+
+* Brings `feature-login` changes into `main`
+
+---
+
+### 6. **Delete a branch**
+
+```bash
+git branch -d feature-login
+```
+
+* Deletes local branch (safe delete)
+
+Force delete (if branch not merged yet):
+
+```bash
+git branch -D feature-login
+```
+
+---
+
+### 7. **Push a branch to GitHub**
+
+```bash
+git push origin feature-login
+```
+
+---
+
+### 8. **Pull a remote branch**
+
+```bash
+git checkout -b feature-login origin/feature-login
+```
+
+* Creates local branch from remote
+
+---
