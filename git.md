@@ -1,3 +1,4 @@
+# 📘 GitHub Cheat Sheet
 **Date**: 2025-09-30 
 ---
 
@@ -49,7 +50,7 @@ git checkout -b feature-xyz
 ```
 
 ---
-
+# 🧑‍🏫 Part 1: Global Setup
 
 ## 🧑‍🏫 What is "Global Git Setup"?
 
@@ -97,7 +98,7 @@ user.email=you@example.com
 
 ---
 
-## 🔄 Bonus (Optional, but smart)
+## 🔄 Bonus
 
 ### Set default branch name to `main`
 
@@ -279,7 +280,7 @@ Now no password needed 🎉
 * **Token/SSH = authentication to GitHub**
 
 ---
-
+# 🧑‍🏫 Part 2: Repository Management
 ## 🧑‍🏫 What is a Repository (Repo)?
 
 A **repository** is just a **folder** tracked by Git.
@@ -617,7 +618,7 @@ Find commit IDs (like `a1b2c3d`) to use with `reset` or `revert`.
 * Bad commit already pushed? → `git revert`
 
 ---
-# 📘 GitHub Cheat Sheet
+
 
 **Date**: 2025-10-04
 
@@ -725,4 +726,317 @@ git stash clear
 * **`stash drop/clear`** → throw away
 
 ---
+# 📘 GitHub Cheat Sheet
+
+**Date**: 2025-10-04
+
+---
+
+## 🧑‍🏫 Part 6: Logs (View History)
+
+Git keeps a **complete history** of everything you do — commits, branches, merges.
+Sometimes you just want to **see what changed, who changed it, and when**.
+
+That’s what `git log` is for. 🕵️‍♂️
+
+---
+
+## 🔧 Commands You Need
+
+### 1. **Basic log**
+
+```bash
+git log
+```
+
+Shows:
+
+* Commit hash (unique ID)
+* Author name & email
+* Date
+* Commit message
+
+> Great for **detailed history**.
+
+---
+
+### 2. **Short log**
+
+```bash
+git log --oneline
+```
+
+* Shows **one line per commit**
+* Displays **commit hash + message**
+* Perfect for a quick overview
+
+Example:
+
+```
+a1b2c3d Fix login bug
+f4e5g6h Add header component
+```
+
+---
+
+### 3. **Graph log (visual branches)**
+
+```bash
+git log --graph --oneline --all
+```
+
+* Shows **branch structure + commits**
+* Lets you **see merges and branch history**
+* Very useful for teams
+
+---
+
+### 4. **View last N commits**
+
+```bash
+git log -n 5
+```
+
+* Shows **last 5 commits** only
+* Quick to check recent work
+
+---
+
+### 5. **Filter by author**
+
+```bash
+git log --author="Your Name"
+```
+
+* Shows commits made by a specific person
+
+---
+
+### 6. **Search commit messages**
+
+```bash
+git log --grep="bug fix"
+```
+
+* Shows commits with specific text in the message
+
+---
+
+## ✅ Teacher Tips
+
+* Always use `git log --oneline` for a **quick overview**.
+* Use `--graph` when you want to **see branch merges visually**.
+* Combine filters:
+
+```bash
+git log --oneline --author="Alice" --grep="login"
+```
+
+> You can **find exactly what you need**.
+
+---
+
+### Quick Example Flow
+
+1. You want to see your last 3 commits:
+
+```bash
+git log -n 3 --oneline
+```
+
+2. You see a commit hash you want to undo:
+
+```bash
+git revert a1b2c3d
+```
+
+3. Boom! You safely undo it without losing history ✅
+
+---
+
+Awesome 👍 Let’s move to **Part 7: GitHub CLI & Remote Management** — teacher style, clear, step by step.
+
+---
+
+# 📘 GitHub Cheat Sheet
+
+**Date**: 2025-10-04
+
+---
+
+## 🧑‍🏫 Part 7: GitHub CLI & Remote Management
+
+Git is great locally, but **GitHub is online**.
+You need commands to **push, pull, and manage remote repos**.
+
+You can do this via:
+
+1. **Git commands with HTTPS/SSH**
+2. **GitHub CLI (`gh`)** → easier for GitHub-specific tasks
+
+---
+
+## 🔹 GitHub CLI (`gh`)
+
+Install GitHub CLI → allows **direct GitHub operations** without opening browser
+
+### 1. **Login**
+
+```bash
+gh auth login
+```
+
+### 2. **Create a repo**
+
+```bash
+gh repo create my-repo
+```
+
+### 3. **Clone a repo**
+
+```bash
+gh repo clone user/repo
+```
+
+### 4. **Create a Pull Request**
+
+```bash
+gh pr create --base main --head feature-login --title "New Feature" --body "Description"
+```
+
+### 5. **Check PR status**
+
+```bash
+gh pr status
+```
+
+### 6. **List issues**
+
+```bash
+gh issue list
+```
+
+---
+
+## ✅ Important Tips
+* Always set upstream (`-u`) when pushing first time → simplifies future pushes.
+* Use GitHub CLI for PRs → faster than web interface.
+* Remember: Git handles **local changes**, GitHub CLI/remote handles **online interaction**.
+
+---
+
+Perfect 👍 Let’s finish with **Part 10: Tips & Best Practices** — simple, teacher style.
+
+---
+
+# 📘 GitHub Cheat Sheet
+
+**Date**: 2025-10-04
+
+---
+
+## 🧑‍🏫 Part 8: Tips & Best Practices
+
+Git is powerful, but using it **smartly** makes your life easier and your team happier.
+
+---
+
+## 🔹 1. Commit Messages
+
+* **Keep it short & descriptive** (~50 chars for title)
+* Use **imperative mood** → “Add login form”, not “Added”
+* Optionally add body for details:
+
+```
+Add login form
+
+- Includes username & password fields
+- Validates empty inputs
+- Sends data to backend API
+```
+
+✅ Good commit messages = easier history navigation
+
+---
+
+## 🔹 2. Branching Strategy
+
+* Always branch for **features/bugs**
+
+* Naming convention (optional but helpful):
+
+  * `feature/<name>` → new features
+  * `bugfix/<name>` → bug fixes
+  * `hotfix/<name>` → urgent fixes
+
+* Never work directly on `main`
+
+---
+
+## 🔹 3. Pull Requests
+
+* PR = your code **needs review** before merge
+* Add **clear description** and **screenshots** if needed
+* Address **review comments** promptly
+
+---
+
+## 🔹 4. Merging Strategy
+
+* **Fast-forward merge** → when no conflict, simple
+* **Squash merge** → combine all commits into one (keeps history clean)
+* **Avoid merge commits** for small fixes → reduces clutter
+
+---
+
+## 🔹 5. Syncing with Remote
+
+* Pull latest `main` before starting work:
+
+```bash
+git checkout main
+git pull origin main
+```
+
+* Rebase or merge feature branch before PR to avoid conflicts
+
+---
+
+## 🔹 6. Keep Repo Clean
+
+* Delete branches after merge:
+
+```bash
+git branch -d feature-login
+git push origin --delete feature-login
+```
+
+* Use `.gitignore` for files that **shouldn’t be tracked** (`node_modules/`, `.env`)
+
+---
+
+## 🔹 7. Safety First
+
+* Use **stash** when switching tasks mid-way
+* Use **revert** for changes already pushed
+* Backup important work → don’t rely solely on local machine
+
+---
+
+### ✅  Summary
+
+* **Commit often** → smaller, meaningful changes
+* **Branch for everything** → never touch `main` directly
+* **Use PRs** → review, feedback, collaboration
+* **Keep history clean** → squash or meaningful commits
+* **Secure authentication** → SSH or PAT
+
+> Follow these practices and Git will feel like magic instead of pain ✨
+
+---
+
+We now have a **complete 8-part GitHub Cheat Sheet**:
+
+---
+
 
