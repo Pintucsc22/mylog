@@ -617,4 +617,112 @@ Find commit IDs (like `a1b2c3d`) to use with `reset` or `revert`.
 * Bad commit already pushed? → `git revert`
 
 ---
+# 📘 GitHub Cheat Sheet
+
+**Date**: 2025-10-04
+
+---
+
+## 🧑‍🏫 Part 5: Stash (Save Work Temporarily)
+
+Imagine you’re writing code ✍️ and suddenly your boss says:
+
+> "Switch to the `main` branch and fix a bug right now!"
+
+But… you have **unfinished changes**.
+You don’t want to commit them yet. What do you do?
+
+👉 Use **`git stash`** → It’s like putting your changes in a **locker**.
+Later, you can open the locker and continue where you left off.
+
+---
+
+## 🔧 Commands You Need
+
+### 1. **Save changes (put in locker)**
+
+```bash
+git stash
+```
+
+✔ Hides **unstaged + staged changes** safely.
+
+---
+
+### 2. **List all stashes (see your lockers)**
+
+```bash
+git stash list
+```
+
+Example output:
+
+```
+stash@{0}: WIP on feature-login
+stash@{1}: WIP on main
+```
+
+---
+
+### 3. **Apply last stash (take from locker, keep locker)**
+
+```bash
+git stash apply
+```
+
+---
+
+### 4. **Apply and remove stash (take and empty locker)**
+
+```bash
+git stash pop
+```
+
+---
+
+### 5. **Drop a stash (throw away locker)**
+
+```bash
+git stash drop stash@{0}
+```
+
+---
+
+### 6. **Clear all stashes (empty all lockers)**
+
+```bash
+git stash clear
+```
+
+---
+
+## ✅ Typical Flow (like a mini story)
+
+1. You’re on `feature-login` branch, writing code
+2. Need to switch to `main` quickly → stash it
+
+   ```bash
+   git stash
+   git checkout main
+   ```
+3. Fix bug on `main`, commit + push
+4. Switch back to `feature-login`
+
+   ```bash
+   git checkout feature-login
+   git stash pop
+   ```
+
+👉 Your unfinished work is back 🎉
+
+---
+
+✅ **Summary**:
+
+* **`stash`** → hide changes
+* **`stash apply`** → get back, locker still there
+* **`stash pop`** → get back + locker deleted
+* **`stash drop/clear`** → throw away
+
+---
 
