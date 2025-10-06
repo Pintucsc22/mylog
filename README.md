@@ -6,8 +6,8 @@ This file tracks my daily learning, progress, and project updates.
 
 ## 📅 Date: YYYY-MM-DD
 ### 🧠 What I Learned Today
-- [ ] Topic or concept 1  
-- [ ] Topic or concept 2  
+- [ ] Firebase Setting
+- [ ] Github tutorial  
 
 ### 💻 What I Worked On
 - Description of the project or task  
