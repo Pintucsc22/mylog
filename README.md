@@ -10,7 +10,7 @@ This file tracks my daily learning, progress, and project updates.
 - [ ] Github tutorial  
 
 ### 💻 What I Worked On
-- Description of the project or task  
+- FireBase Authentication  
 - Key code changes or commits  
 
 ### 🚀 Achievements
