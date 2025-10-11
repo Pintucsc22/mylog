@@ -187,3 +187,189 @@ function helloWorld() {
 
 ---
 
+## 🧮 1. **2D Arrays: Understanding `getValues()`**
+
+### 🧠 What is it?
+
+When you use `.getValues()` in Apps Script, it returns **a 2D array** — an array of **rows**, and each row is an array of **cells**.
+
+```javascript
+function readRange() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const data = sheet.getRange("A1:B3").getValues();
+  Logger.log(data);
+}
+```
+
+Imagine your sheet has:
+
+| A    | B   |
+| ---- | --- |
+| Name | Age |
+| Alex | 25  |
+| Riya | 30  |
+
+The variable `data` will be:
+
+```js
+[
+  ["Name", "Age"],
+  ["Alex", 25],
+  ["Riya", 30]
+]
+```
+
+> 📌 Each row is an array. So `data[1][0]` = `"Alex"`, `data[2][1]` = `30`
+
+---
+
+### ✅ Looping Through a 2D Array
+
+```javascript
+function loopData() {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const data = sheet.getRange("A2:B4").getValues();
+
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    Logger.log("Row " + (i+1) + ": Name=" + row[0] + ", Age=" + row[1]);
+  }
+}
+```
+
+---
+
+## 🗓️ 2. **Working with Dates**
+
+### a. 📅 Get Current Date
+
+```javascript
+const today = new Date();
+```
+
+### b. 🕓 Set time to 00:00:00 (for clean comparisons)
+
+```javascript
+today.setHours(0, 0, 0, 0);
+```
+
+### c. ✅ Compare Two Dates (Same Day?)
+
+```javascript
+function isSameDay(d1, d2) {
+  return d1.getFullYear() === d2.getFullYear() &&
+         d1.getMonth() === d2.getMonth() &&
+         d1.getDate() === d2.getDate();
+}
+```
+
+### d. 🧪 Timestamp a cell
+
+```javascript
+sheet.getRange("C2").setValue(new Date());
+```
+
+> Google Sheets stores dates as numbers, so always format the cell correctly.
+
+---
+
+## 🧰 3. **Creating Custom Menus & Buttons**
+
+### a. 📜 Add a menu to Google Sheets
+
+```javascript
+function onOpen() {
+  const ui = SpreadsheetApp.getUi();
+  ui.createMenu("🚀 My Scripts")
+    .addItem("Say Hello", "sayHello")
+    .addItem("Run Task", "startTask")
+    .addToUi();
+}
+
+function sayHello() {
+  SpreadsheetApp.getUi().alert("Hello from Apps Script!");
+}
+```
+
+* `onOpen()` runs every time the sheet is opened
+* The menu appears in the menu bar
+
+### b. 🧷 Add a Button (Image or Drawing)
+
+1. Insert > Drawing
+2. Add a button shape or image
+3. Assign Script: type the name of a function like `sayHello`
+
+---
+
+## 🚨 4. **Error Handling (try...catch)**
+
+Sometimes things break (e.g., bad data, missing sheet). Use `try...catch` to avoid script crashes.
+
+```javascript
+function safeCode() {
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("MissingSheet");
+    if (!sheet) throw new Error("Sheet not found!");
+
+    sheet.getRange("A1").setValue("Hello!");
+  } catch (error) {
+    Logger.log("❌ Error: " + error.message);
+    SpreadsheetApp.getUi().alert("Something went wrong: " + error.message);
+  }
+}
+```
+
+> ✅ Always handle expected errors gracefully!
+
+---
+
+## 🔌 5. **Connecting Sheets, Forms, and Gmail**
+
+### a. ✅ Send Email from a Sheet
+
+```javascript
+function sendEmailExample() {
+  const email = "someone@example.com";
+  const subject = "Hello from Apps Script";
+  const message = "This is a test email.";
+  MailApp.sendEmail(email, subject, message);
+}
+```
+
+> 💬 Use this to send reminders or reports automatically!
+
+---
+
+### b. 📋 Connect Google Form to Sheet
+
+When a form is submitted, you can run code using the trigger `onFormSubmit(e)`
+
+```javascript
+function onFormSubmit(e) {
+  const responses = e.values; // array of submitted values
+  Logger.log("Form submitted: " + responses.join(", "));
+}
+```
+
+Set up this function as a trigger:
+
+* In Apps Script: **Triggers > + Add Trigger**
+* Choose: `onFormSubmit`, from spreadsheet or form
+
+---
+
+### c. 🔗 Copy Data from One Sheet to Another
+
+```javascript
+function copyData() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const source = ss.getSheetByName("Sheet1");
+  const target = ss.getSheetByName("Sheet2");
+
+  const data = source.getRange("A2:B10").getValues();
+  target.getRange("A2:B10").setValues(data);
+}
+```
+
+---
