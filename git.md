@@ -391,20 +391,9 @@ git remote rename old-name new-name
 ```
 
 ---
-
-
-
-
-Great 👍 Let’s continue in the **same style**.
-Here’s **Part 3: Branching in Git/GitHub** 🚀
+# Part 3: **Branching in Git/GitHub** 🚀
 
 ---
-
-**Date**: 2025-10-04
-
----
-
-## 🧑‍🏫 Part 3: Branching
 
 A **branch** is like a **separate workspace** where you can experiment, fix bugs, or add features **without affecting the main code**.
 
@@ -509,15 +498,6 @@ git checkout -b feature-login origin/feature-login
 * Creates local branch from remote
 
 ---
-
----
-
-# 📘 GitHub Cheat Sheet
-
-**Date**: 2025-10-04
-
----
-
 ## 🧑‍🏫 Part 4: Undo & Reset (Fixing Mistakes)
 
 One of the best parts of Git is that **you can always go back**.
@@ -618,12 +598,6 @@ Find commit IDs (like `a1b2c3d`) to use with `reset` or `revert`.
 * Bad commit already pushed? → `git revert`
 
 ---
-
-
-**Date**: 2025-10-04
-
----
-
 ## 🧑‍🏫 Part 5: Stash (Save Work Temporarily)
 
 Imagine you’re writing code ✍️ and suddenly your boss says:
@@ -726,13 +700,8 @@ git stash clear
 * **`stash drop/clear`** → throw away
 
 ---
-# 📘 GitHub Cheat Sheet
 
-**Date**: 2025-10-04
-
----
-
-## 🧑‍🏫 Part 6: Logs (View History)
+# 🧑‍🏫 Part 6: Logs (View History)
 
 Git keeps a **complete history** of everything you do — commits, branches, merges.
 Sometimes you just want to **see what changed, who changed it, and when**.
@@ -822,7 +791,7 @@ git log --grep="bug fix"
 
 ---
 
-## ✅ Teacher Tips
+## ✅ Important Tips
 
 * Always use `git log --oneline` for a **quick overview**.
 * Use `--graph` when you want to **see branch merges visually**.
@@ -853,18 +822,7 @@ git revert a1b2c3d
 3. Boom! You safely undo it without losing history ✅
 
 ---
-
-Awesome 👍 Let’s move to **Part 7: GitHub CLI & Remote Management** — teacher style, clear, step by step.
-
----
-
-# 📘 GitHub Cheat Sheet
-
-**Date**: 2025-10-04
-
----
-
-## 🧑‍🏫 Part 7: GitHub CLI & Remote Management
+# 🧑‍🏫 Part 7: GitHub CLI & Remote Management
 
 Git is great locally, but **GitHub is online**.
 You need commands to **push, pull, and manage remote repos**.
@@ -924,17 +882,6 @@ gh issue list
 * Remember: Git handles **local changes**, GitHub CLI/remote handles **online interaction**.
 
 ---
-
-Perfect 👍 Let’s finish with **Part 10: Tips & Best Practices** — simple, teacher style.
-
----
-
-# 📘 GitHub Cheat Sheet
-
-**Date**: 2025-10-04
-
----
-
 ## 🧑‍🏫 Part 8: Tips & Best Practices
 
 Git is powerful, but using it **smartly** makes your life easier and your team happier.
