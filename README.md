@@ -7,7 +7,8 @@ This file tracks my daily learning, progress, and project updates.
 ## 📅 Date: YYYY-MM-DD
 ### 🧠 What I Learned Today
 - [ ] Firebase Setting
-- [ ] Github tutorial  
+- [ ] Github tutorial
+- [ ] Wordpress Setting 
 
 ### 💻 What I Worked On
 - FireBase Authentication  
