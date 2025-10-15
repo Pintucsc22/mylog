@@ -8,7 +8,8 @@ This file tracks my daily learning, progress, and project updates.
 ### 🧠 What I Learned Today
 - [ ] Firebase Setting
 - [ ] Github tutorial
-- [ ] Wordpress Setting 
+- [ ] Wordpress Setting
+- [ ] basic post learning
 
 ### 💻 What I Worked On
 - FireBase Authentication  
