@@ -10,6 +10,7 @@ This file tracks my daily learning, progress, and project updates.
 - [ ] Github tutorial
 - [ ] Wordpress Setting
 - [ ] basic post learning
+- [ ] Chatgpt Tips
 
 ### 💻 What I Worked On
 - FireBase Authentication  
