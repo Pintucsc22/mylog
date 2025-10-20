@@ -11,6 +11,7 @@ This file tracks my daily learning, progress, and project updates.
 - [ ] Wordpress Setting
 - [ ] basic post learning
 - [ ] Chatgpt Tips
+- [ ] Bridge network
 
 ### 💻 What I Worked On
 - FireBase Authentication  
