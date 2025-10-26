@@ -36,15 +36,20 @@ Formula:
  SUM(
    FILTER(
      $F$8:$F$500,
-     ($A$8:$A$500=A8) * (AO$8:AO$500<=AO8)
+     ($A$8:$A$500=A8) * 
+     (
+       (AO$8:AO$500>0) * (AO$8:AO$500<=AO8) + 
+       (AO$8:AO$500=0) * (ROW($A$8:$A$500)<=ROW())
+     )
    )
  )
 )
+
 ```
 ### Column: StepNumber (AO)
 Formula:
 ```
-=IF(H8="","", VALUE(REGEXEXTRACT(H8, "\d+")))
+=IF(H8="", 0, VALUE(REGEXEXTRACT(H8, "\d+")))
 ```
 ### Column: Time Schedule (I)
 Formula:
