@@ -1,29 +1,18 @@
 # Google Sheets Formulas
 
-## Formula 1 - Weighted Value
-Column: Task %(G)
+## Formula 1 - Task %
+### Column: Task Priorty Value Helper Column(AL)
 Formula:
 ```
 
-=IF(OR(A8="", E8="", F8=""), "",
-(IF(E8="Link-High", 25,
-IF(E8="High", 20,
-IF(E8="Link-Medium", 20,
-IF(E8="Medium", 15,
-IF(E8="Link-Low", 12,
-IF(E8="Low", 8, 0)))))) * F8) /
-SUMPRODUCT(
-(A$8:A=$A8) *
-(
-(E$8:E="Link-High") * 25 +
-(E$8:E="High") * 20 +
-(E$8:E="Link-Medium") * 20 +
-(E$8:E="Medium") * 15 +
-(E$8:E="Link-Low") * 12 +
-(E$8:E="Low") * 8
-) *
-F$8:F
-)
+=IF(A8="","",VLOOKUP(E8,$AB$1:$AC$6,2,0)*F8)
+
+```
+### Column: Task %(G)
+Formula:
+```
+
+=IF(AL8="","", AL8 / SUMIFS($AL$8:$AL, $A$8:$A, A8))
 
 ```
 
