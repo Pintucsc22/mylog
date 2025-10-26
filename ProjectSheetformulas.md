@@ -17,47 +17,54 @@ Formula:
 ```
 
 ## Formula 2 - Time Schedule
-Column: Time Schedule (I)
+
+Helper Columns Added
+
+- AM: TotalMinutes (SUMIF per group)
+- AN: CumulativeMinutes (sum up to current step)
+- AO: StepNumber (numeric step from H)
+- I: Time Schedule (final "hh:mm to hh:mm")
+### Column: TotalMinutes (AM)
+Formula:
+```
+=IF(A8="", "", SUMIF($A$8:$A, A8, $F$8:$F))
+```
+### Column: CumulativeMinutes (AN)
+Formula:
+```
+=IF(A8="","",
+ SUM(
+   FILTER(
+     $F$8:$F$500,
+     ($A$8:$A$500=A8) * (AO$8:AO$500<=AO8)
+   )
+ )
+)
+```
+### Column: StepNumber (AO)
+Formula:
+```
+=IF(H8="","", VALUE(REGEXEXTRACT(H8, "\d+")))
+```
+### Column: Time Schedule (I)
 Formula:
 ```
 
-=IF(A8="","", IF(H8="Break",
-   TEXT($E$6 + SUMIF($A$7:$A$8,A8,$F$7:$F$8)/1440 + IF($E$6 + SUMIF($A$7:$A$8,A8,$F$7:$F$8)/1440 >= TIME(13,0,0), TIME(0,30,0), 0),"hh:mm")
+=IF(A8="","",
+ IF(H8="Break",
+   TEXT($E$6 + AN8/1440 + IF($E$6 + AN8/1440 >= TIME(13,0,0), TIME(0,30,0), 0),"hh:mm")
    & " to " &
-   TEXT($E$6 + (SUMIF($A$7:$A$8,A8,$F$7:$F$8)+F8)/1440 + IF($E$6 + (SUMIF($A$7:$A$8,A8,$F$7:$F$8)+F8)/1440 >= TIME(13,0,0), TIME(0,30,0), 0),"hh:mm"),
-   
-   TEXT($E$6 + (SUMPRODUCT(
-       ($A$8:$A=A8) *
-       (ISNUMBER($F$8:$F)) *
-       (
-         (VALUE(IFERROR(REGEXEXTRACT($H$8:$H,"(\d+)"),0)) < VALUE(IFERROR(REGEXEXTRACT(H8,"(\d+)"),0))) +
-         (VALUE(IFERROR(REGEXEXTRACT($H$8:$H,"(\d+)"),0)) = VALUE(IFERROR(REGEXEXTRACT(H8,"(\d+)"),0))) * (ROW($H$8:$H) <= ROW())
-       ) * $F$8:$F
-   ) - F8)/1440 + IF($E$6 + (SUMPRODUCT(
-       ($A$8:$A=A8) *
-       (ISNUMBER($F$8:$F)) *
-       (
-         (VALUE(IFERROR(REGEXEXTRACT($H$8:$H,"(\d+)"),0)) < VALUE(IFERROR(REGEXEXTRACT(H8,"(\d+)"),0))) +
-         (VALUE(IFERROR(REGEXEXTRACT($H$8:$H,"(\d+)"),0)) = VALUE(IFERROR(REGEXEXTRACT(H8,"(\d+)"),0))) * (ROW($H$8:$H) <= ROW())
-       ) * $F$8:$F
-   ) - F8)/1440 >= TIME(13,0,0), TIME(0,30,0), 0),"hh:mm")
-   & " to " &
-   TEXT($E$6 + SUMPRODUCT(
-       ($A$8:$A=A8) *
-       (ISNUMBER($F$8:$F)) *
-       (
-         (VALUE(IFERROR(REGEXEXTRACT($H$8:$H,"(\d+)"),0)) < VALUE(IFERROR(REGEXEXTRACT(H8,"(\d+)"),0))) +
-         (VALUE(IFERROR(REGEXEXTRACT($H$8:$H,"(\d+)"),0)) = VALUE(IFERROR(REGEXEXTRACT(H8,"(\d+)"),0))) * (ROW($H$8:$H) <= ROW())
-       ) * $F$8:$F
-   )/1440 + IF($E$6 + SUMPRODUCT(
-       ($A$8:$A=A8) *
-       (ISNUMBER($F$8:$F)) *
-       (
-         (VALUE(IFERROR(REGEXEXTRACT($H$8:$H,"(\d+)"),0)) < VALUE(IFERROR(REGEXEXTRACT(H8,"(\d+)"),0))) +
-         (VALUE(IFERROR(REGEXEXTRACT($H$8:$H,"(\d+)"),0)) = VALUE(IFERROR(REGEXEXTRACT(H8,"(\d+)"),0))) * (ROW($H$8:$H) <= ROW())
-       ) * $F$8:$F
-   )/1440 >= TIME(13,0,0), TIME(0,30,0), 0),"hh:mm")
-))
+   TEXT($E$6 + (AN8+F8)/1440 + IF($E$6 + (AN8+F8)/1440 >= TIME(13,0,0), TIME(0,30,0), 0),"hh:mm"),
+
+   LET(
+     startTime, $E$6 + (AN8-F8)/1440,
+     endTime,   $E$6 + AN8/1440,
+     adjStart, IF(startTime >= TIME(13,0,0), startTime + TIME(0,30,0), startTime),
+     adjEnd,   IF(endTime   >= TIME(13,0,0), endTime   + TIME(0,30,0), endTime),
+     TEXT(adjStart,"hh:mm") & " to " & TEXT(adjEnd,"hh:mm")
+   )
+ )
+)
 
 
 ```
