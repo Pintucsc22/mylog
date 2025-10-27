@@ -73,6 +73,22 @@ Formula:
 
 
 ```
+## Formula 3 - Task %
+### Column: B4
+Formula:
+```
 
+=IF(
+  COUNTIFS(A8:A, TODAY(), J8:J, {"Completed","Completed_Waiting"})=0,
+  "0%",
+  TEXT(
+    SUMIFS(G8:G, A8:A, TODAY(), J8:J, "Completed") +
+    SUMIFS(G8:G, A8:A, TODAY(), J8:J, "Completed_Waiting") * 0.8,
+    "0%"
+  )
+)
+
+
+```
 ---
 
