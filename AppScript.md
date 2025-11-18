@@ -1,375 +1,359 @@
-## 🏗️ What is Google Apps Script?
 
-**Google Apps Script** is a **JavaScript-based** platform created by Google to **automate tasks** and **extend** Google Workspace apps like:
-
-* **Google Sheets**
-* Google Docs
-* Google Forms
-* Gmail
-* Calendar
-
-It's like adding **custom logic** to your Google Sheets — such as buttons, automated reports, email notifications, etc.
-
----
-
-## 🧠 Key Concepts You Need to Know
-
-Let’s go over the **basics**, one at a time:
-
----
-
-### 1. ✅ The Script Editor
-
-**Where to write Apps Script code:**
-
-1. Open your **Google Sheet**
-2. Go to **Extensions > Apps Script**
-3. You'll see a code editor. This is where you write your scripts.
-
----
-
-### 2. 🔄 Functions: The Building Blocks
-
-Apps Script is organized into **functions** (just like in JavaScript):
-
-```javascript
-function myFirstFunction() {
-  Logger.log("Hello, world!");
-}
-```
-
-* `function` is the keyword to define a block of code
-* `myFirstFunction` is the name
-* Code inside `{}` runs when you call the function
-
-💡 You can run any function manually from the Apps Script editor by selecting it and clicking **▶️ Run**.
-
----
-
-### 3. 📋 Logging Output
-
-To **see what your code is doing**, use `Logger.log()`:
-
-```javascript
-function logExample() {
-  Logger.log("This is a message");
-}
-```
-
-* After running the function, go to **View > Logs** to see what it printed.
-
----
-
-### 4. 📄 Working with Google Sheets
-
-You can read and write to cells using Apps Script.
-
-#### Example: Write to a Cell
-
-```javascript
-function writeToSheet() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  sheet.getRange("A1").setValue("Hello!");
-}
-```
-
-* `SpreadsheetApp.getActiveSpreadsheet()` → gets the current sheet file
-* `.getActiveSheet()` → picks the currently opened sheet tab
-* `.getRange("A1")` → selects cell A1
-* `.setValue("Hello!")` → writes text to that cell
-
----
-
-#### Example: Read from a Cell
-
-```javascript
-function readFromSheet() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const value = sheet.getRange("A1").getValue();
-  Logger.log("Value in A1 is: " + value);
-}
-```
-
----
-
-### 5. 📚 Variables
-
-You store data in **variables** using `const` or `let`:
-
-```javascript
-const name = "Alex";
-let age = 25;
-```
-
-Use `const` when the value **won’t change**, and `let` if it **might change**.
-
----
-
-### 6. 🔁 Loops and Conditions
-
-These are just like JavaScript:
-
-```javascript
-function loopExample() {
-  for (let i = 1; i <= 5; i++) {
-    Logger.log("Count: " + i);
-  }
-}
-
-function ifExample() {
-  const score = 80;
-  if (score >= 75) {
-    Logger.log("Passed");
-  } else {
-    Logger.log("Try again");
-  }
-}
-```
-
----
-
-### 7. ✅ Triggers (Automation!)
-
-Apps Script supports **triggers** to automatically run functions.
-
-There are 2 types:
-
-#### a. **Simple Triggers** (no setup needed):
-
-* `onEdit(e)` → runs every time someone edits the sheet
-
-```javascript
-function onEdit(e) {
-  Logger.log("Cell edited: " + e.range.getA1Notation());
-}
-```
-
-#### b. **Installable Triggers** (set up manually):
-
-You can create time-based triggers:
-
-* Run a function every hour
-* Run at 11:59 PM every day
-
-👉 Go to **Triggers (⏰ icon)** in the script editor > Add Trigger
-
----
-
-## 🧰 Summary of Key Objects in Google Sheets
-
-| Object                    | What it does                           |
-| ------------------------- | -------------------------------------- |
-| `SpreadsheetApp`          | Entry point to access Sheets           |
-| `.getActiveSpreadsheet()` | The spreadsheet file you're working on |
-| `.getSheetByName(name)`   | Access a specific sheet/tab            |
-| `.getRange("A1")`         | Access a specific cell or range        |
-| `.setValue()`             | Write data                             |
-| `.getValue()`             | Read data                              |
-| `.getValues()`            | Read multiple rows/columns (2D array)  |
-| `.setValues()`            | Write multiple values (2D array)       |
-
----
-
-## 🧪 Try This: Your First Real Script
-
-```javascript
-function helloWorld() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  sheet.getRange("A1").setValue("Hello, Apps Script!");
-}
-```
-
-* Paste this into your script editor
-* Hit ▶️ to run it
-* Look at cell A1 in your Sheet
-
-🎉 That’s your first automation!
-
----
-
-## 🧮 1. **2D Arrays: Understanding `getValues()`**
-
-### 🧠 What is it?
-
-When you use `.getValues()` in Apps Script, it returns **a 2D array** — an array of **rows**, and each row is an array of **cells**.
-
-```javascript
-function readRange() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = sheet.getRange("A1:B3").getValues();
-  Logger.log(data);
-}
-```
-
-Imagine your sheet has:
-
-| A    | B   |
-| ---- | --- |
-| Name | Age |
-| Alex | 25  |
-| Riya | 30  |
-
-The variable `data` will be:
-
-```js
-[
-  ["Name", "Age"],
-  ["Alex", 25],
-  ["Riya", 30]
-]
-```
-
-> 📌 Each row is an array. So `data[1][0]` = `"Alex"`, `data[2][1]` = `30`
-
----
-
-### ✅ Looping Through a 2D Array
-
-```javascript
-function loopData() {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
-  const data = sheet.getRange("A2:B4").getValues();
-
-  for (let i = 0; i < data.length; i++) {
-    const row = data[i];
-    Logger.log("Row " + (i+1) + ": Name=" + row[0] + ", Age=" + row[1]);
-  }
-}
-```
-
----
-
-## 🗓️ 2. **Working with Dates**
-
-### a. 📅 Get Current Date
-
-```javascript
-const today = new Date();
-```
-
-### b. 🕓 Set time to 00:00:00 (for clean comparisons)
-
-```javascript
-today.setHours(0, 0, 0, 0);
-```
-
-### c. ✅ Compare Two Dates (Same Day?)
-
-```javascript
+/** ───────────────────────────────
+ * 📅 DATE UTILITIES
+ *───────────────────────────────*/
 function isSameDay(d1, d2) {
-  return d1.getFullYear() === d2.getFullYear() &&
+  return d1 instanceof Date && d2 instanceof Date &&
+         d1.getFullYear() === d2.getFullYear() &&
          d1.getMonth() === d2.getMonth() &&
          d1.getDate() === d2.getDate();
 }
-```
 
-### d. 🧪 Timestamp a cell
+function getToday() {
+  const d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
 
-```javascript
-sheet.getRange("C2").setValue(new Date());
-```
+/** ───────────────────────────────
+ * 📋 SHEET HELPERS
+ *───────────────────────────────*/
+function getSheet(name) {
+  return SpreadsheetApp.getActiveSpreadsheet().getSheetByName(name);
+}
 
-> Google Sheets stores dates as numbers, so always format the cell correctly.
+function getSheetData(sheet, range = "A8:AF1000") {
+  return sheet.getRange(range).getValues();
+}
 
----
+function isAHEmptyRow(row) {
+  return row.slice(0,8).every(v => v === "" || v === null);
+}
 
-## 🧰 3. **Creating Custom Menus & Buttons**
+function findFirstEmptyInColumn(values, colIndex = 0) {
+  for (let i = 0; i < values.length; i++) {
+    if (!values[i][colIndex]) return i;
+  }
+  return -1;
+}
 
-### a. 📜 Add a menu to Google Sheets
+/** ───────────────────────────────
+ * ▶️ START TODAY
+ *───────────────────────────────*/
+function startToday() {
+  const sheet = SpreadsheetApp.getActiveSheet();
+  if (!sheet || sheet.getName() !== "ProjectSheet") return;
+  const data = getSheetData(sheet);
+  const today = getToday();
 
-```javascript
-function onOpen() {
+  let todayRow = data.findIndex(row => isSameDay(row[0], today));
+
+  if (todayRow === -1) {
+    const emptyRow = findFirstEmptyInColumn(data, 0); // column A
+    if (emptyRow !== -1) {
+      sheet.getRange(8 + emptyRow, 1).setValue(today); // Add date
+      todayRow = emptyRow;
+    }
+  }
+
+  // Add timestamp in AA if missing
+  data.forEach((row, i) => {
+    if (isSameDay(row[0], today) && !row[26]) {
+      sheet.getRange(8 + i, 27).setValue(new Date()); // Column AA
+    }
+  });
+  sheet.getRange("E4").setValue(false);
+}
+
+
+/** ───────────────────────────────
+ * 📥 IMPORT DROP LIST
+ *───────────────────────────────*/
+function importDropList(sheet) {
+  if (!sheet) sheet = getSheet("ProjectSheet");
+  const dropSheet = getSheet("Drop List");
+  if (!sheet || !dropSheet) return;
+
+  const dropData = dropSheet.getRange("A16:D25").getValues();
+  if (!dropData || dropData.length === 0) {
+    Logger.log("❌ Drop List is empty.");
+    return;
+  }
+
+  const fullData = sheet.getRange("A8:H1000").getValues();
+
+  Logger.log(`🔹 Found ${dropData.length} drop rows`);
+
+  dropData.forEach((dropRow, index) => {
+    if (!dropRow.some(v => v !== "" && v !== null)) {
+      Logger.log(`⏭ Drop List row ${16 + index} is blank, skipping`);
+      return;
+    }
+
+    // Check if same task already exists in column A (duplication check)
+    const existsInA = fullData.some(row => row[0] && row[0] === dropRow[0]);
+    if (existsInA) {
+      Logger.log(`⏭ Drop List row ${16 + index} already exists in ProjectSheet column A, skipping`);
+      return;
+    }
+
+    // Find the first empty row in column A where C–F are empty
+    let targetRow = -1;
+    for (let i = 0; i < fullData.length; i++) {
+      if (!fullData[i][0] && fullData[i].slice(2, 6).every(v => v === "" || v === null)) {
+        targetRow = 8 + i;
+        break;
+      }
+    }
+
+    if (targetRow === -1) {
+      Logger.log(`❌ No suitable empty row found in ProjectSheet for drop row ${16 + index}`);
+      return;
+    }
+
+    // Insert drop row into C–F
+    sheet.getRange(targetRow, 3, 1, 4).setValues([dropRow]); // C-F
+    //sheet.getRange(targetRow, 9).setValue("Pending"); // I
+    sheet.getRange(targetRow, 35).clearContent(); // AI helper
+
+    Logger.log(`✅ Drop List row ${16 + index} imported into ProjectSheet row ${targetRow}`);
+
+    // Update local copy
+    fullData[targetRow - 8].splice(2, 4, ...dropRow); // C-F
+  });
+
+  Logger.log("🔹 Drop List import complete");
+}
+
+
+/** ───────────────────────────────
+ * 📤 SUBMIT TODAY (Manual)
+ *───────────────────────────────*/
+function submitToday() {
+  const sheet = SpreadsheetApp.getActiveSheet();
   const ui = SpreadsheetApp.getUi();
-  ui.createMenu("🚀 My Scripts")
-    .addItem("Say Hello", "sayHello")
-    .addItem("Run Task", "startTask")
-    .addToUi();
+  const today = getToday();
+  const dataRange = sheet.getRange("A8:AI1000");
+  const data = dataRange.getValues();
+  const submitted = [];
+  const issues = [];
+
+  // Step 0️⃣: Skip if any today's row already has AB (col 28)
+  const alreadySubmitted = data.some(row => isSameDay(row[0], today) && row[27]);
+  if (alreadySubmitted) {
+    ui.alert("⚠️ Submission skipped.\nToday's rows already have timestamp in AB (column 28).");
+    Logger.log("⚠️ Submission skipped.");
+    return;
+  }
+
+  // Step 1️⃣: Validate B–F and J
+  const incompleteRows = [];
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    if (!isSameDay(row[0], today)) continue;
+    const bToF = row.slice(1, 6);
+    const statusJ = String(row[9] || "").trim();
+    if (bToF.some(v => v === "" || v === null) || statusJ === "")
+      incompleteRows.push(i + 8);
+  }
+
+  if (incompleteRows.length > 0) {
+    ui.alert("⚠️ Submission cancelled.\nEmpty B–F or J in rows:\n" + incompleteRows.join(", "));
+    Logger.log("Cancelled. Empty in rows: " + incompleteRows.join(", "));
+    return;
+  }
+
+  // Step 2️⃣: Batch update timestamps in AB (col 28)
+  const now = new Date();
+  const abUpdates = data.map(row => (isSameDay(row[0], today) && !row[27]) ? [now] : [row[27] || ""]);
+  sheet.getRange(8, 28, abUpdates.length, 1).setValues(abUpdates);
+  sheet.getRange(8, 28, abUpdates.length, 1).setNumberFormat("HH:mm:ss");
+
+  // Step 3️⃣: Carry-forward logic (batch)
+  const fullAH = sheet.getRange("A8:H1000").getValues();
+  const carryForwardWrites = [];
+
+  for (let i = 0; i < data.length; i++) {
+    const row = data[i];
+    const rowNum = i + 8;
+    if (!isSameDay(row[0], today)) continue;
+
+    const status = String(row[9] || "").trim();
+    const carryFlag = row[34];
+    const allowed = ["Completed", "Not Completed", "Project Cancelled", "Pending"];
+    if (!allowed.includes(status)) {
+      issues.push(`Row ${rowNum}: Invalid status '${status}'`);
+      continue;
+    }
+
+    if ((status === "Pending" || status === "Not Completed") && row[3] && !carryFlag) {
+      const emptyIndex = fullAH.findIndex(r => r.slice(0, 8).every(v => !v));
+      if (emptyIndex !== -1) {
+        const targetRow = 8 + emptyIndex;
+        carryForwardWrites.push({
+          targetRow,
+          cfValues: [row.slice(2, 6), status, "Carried Forward", new Date(), rowNum]
+        });
+        // mark as filled in memory to avoid duplicate empty row use
+        fullAH[emptyIndex][0] = "FILLED";
+      } else {
+        issues.push(`Row ${rowNum}: No empty row found for carry forward`);
+      }
+    }
+    submitted.push(rowNum);
+  }
+
+  // 🔄 Batch apply carry-forward writes
+  carryForwardWrites.forEach(w => {
+    const { targetRow, cfValues } = w;
+    sheet.getRange(targetRow, 3, 1, 4).setValues([cfValues[0]]); // C–F
+    sheet.getRange(targetRow, 32).setValue(cfValues[1]); // AF
+    sheet.getRange(cfValues[4], 33).setValue(cfValues[2]); // AG
+    sheet.getRange(cfValues[4], 35).setValue(cfValues[3]); // AI
+  });
+
+  // Step 4️⃣: Summary
+  showSummary(ui, submitted, issues);
+
+  // Step 5️⃣: Import Drop List
+  importDropList(sheet);
 }
 
-function sayHello() {
-  SpreadsheetApp.getUi().alert("Hello from Apps Script!");
+
+
+
+/** ───────────────────────────────
+ * 🕒 AUTO SUBMIT (Night)
+ *───────────────────────────────*/
+function autoSubmitAtNight() {
+  const sheet = getSheet("ProjectSheet");
+  if (!sheet) return;
+
+  const today = getToday();
+  let data = getSheetData(sheet);
+
+  // Step 1️⃣: Fill defaults for B–F and J
+  const updatesB = [], updatesC = [], updatesD = [], updatesE = [], updatesF = [], updatesJ = [];
+  let anyTodayRow = false;
+
+  data.forEach((row, i) => {
+    if (isSameDay(row[0], today)) {
+      anyTodayRow = true;
+      updatesB.push([row[1] || "Accepted"]);
+      updatesC.push([row[2] || "Others"]);
+      updatesD.push([row[3] || "No"]);
+      updatesE.push([row[4] || "Low"]);
+      updatesF.push([row[5] || "0"]);
+
+      let status = row[9]; // J column
+      if (!status) status = "Not Completed";
+      if (status === "Planning" || status === "Running") status = "Pending";
+      updatesJ.push([status]);
+    } else {
+      updatesB.push([row[1]]);
+      updatesC.push([row[2]]);
+      updatesD.push([row[3]]);
+      updatesE.push([row[4]]);
+      updatesF.push([row[5]]);
+      updatesJ.push([row[9]]);
+    }
+  });
+
+  // Step 2️⃣: Write all updates in batch
+  const lastRow = data.length + 7;
+  sheet.getRange("B8:B" + lastRow).setValues(updatesB);
+  sheet.getRange("C8:C" + lastRow).setValues(updatesC);
+  sheet.getRange("D8:D" + lastRow).setValues(updatesD);
+  sheet.getRange("E8:E" + lastRow).setValues(updatesE);
+  sheet.getRange("F8:F" + lastRow).setValues(updatesF);
+  sheet.getRange("J8:J" + lastRow).setValues(updatesJ);
+
+  if (!anyTodayRow) {
+    Logger.log("No rows for today found, skipping auto-submit.");
+    return;
+  }
+
+  // Step 3️⃣: Re-fetch data after defaults
+  data = getSheetData(sheet);
+
+  // Step 4️⃣: Verify all today rows A–F and J are filled
+  const incompleteRows = [];
+  data.forEach((row, i) => {
+    if (isSameDay(row[0], today)) {
+      const checkCells = [row[0], row[1], row[2], row[3], row[4], row[5], row[9]]; // A-F + J
+      if (checkCells.some(v => v === "" || v === null)) {
+        incompleteRows.push(i + 8);
+      }
+    }
+  });
+
+  if (incompleteRows.length > 0) {
+    Logger.log("⚠️ Auto-submit cancelled, incomplete today rows: " + incompleteRows.join(", "));
+    return;
+  }
+
+  // Step 5️⃣: Call submitToday()
+  Logger.log("✅ Auto-submit: all today rows ready, calling submitToday()");
+  submitToday();
 }
-```
 
-* `onOpen()` runs every time the sheet is opened
-* The menu appears in the menu bar
 
-### b. 🧷 Add a Button (Image or Drawing)
 
-1. Insert > Drawing
-2. Add a button shape or image
-3. Assign Script: type the name of a function like `sayHello`
 
----
+/** ───────────────────────────────
+ * 🖊️ ON EDIT
+ *───────────────────────────────*/
+function onEdit(e) {
+  const sheet = e.range.getSheet();
+  if (!sheet || sheet.getName() !== "ProjectSheet") return;
 
-## 🚨 4. **Error Handling (try...catch)**
+  const row = e.range.getRow();
+  const col = e.range.getColumn();
+  const val = e.value ? e.value.toString().trim() : "";
 
-Sometimes things break (e.g., bad data, missing sheet). Use `try...catch` to avoid script crashes.
+  // Button triggers
+  if (e.range.getA1Notation() === "D4" && val === "TRUE") {
+    startToday();
+    e.range.setValue(false);
+    return;
+  }
 
-```javascript
-function safeCode() {
-  try {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("MissingSheet");
-    if (!sheet) throw new Error("Sheet not found!");
+  if (e.range.getA1Notation() === "E4" && val === "TRUE") {
+    submitToday();
+    e.range.setValue(false);
+    return;
+  }
 
-    sheet.getRange("A1").setValue("Hello!");
-  } catch (error) {
-    Logger.log("❌ Error: " + error.message);
-    SpreadsheetApp.getUi().alert("Something went wrong: " + error.message);
+  // Timestamp logic
+  if (row >= 8) {
+    if (col === 2 && val === "Accepted") {
+      const cell = sheet.getRange(row, 29); // Column AC
+      if (!cell.getValue()) cell.setValue(new Date());
+    }
+
+    if (col === 10) { // Column J
+      if (val === "Running") {
+        const cell = sheet.getRange(row, 30); // AD
+        if (!cell.getValue()) cell.setValue(new Date());
+      } else if (val === "Completed") {
+        const cell = sheet.getRange(row, 31); // AE
+        if (!cell.getValue()) cell.setValue(new Date());
+      } else if (val === "Completed_Waiting") {
+        const cell = sheet.getRange(row, 36); // AJ
+        if (!cell.getValue()) cell.setValue(new Date());
+      }
+    }
   }
 }
-```
 
-> ✅ Always handle expected errors gracefully!
 
----
-
-## 🔌 5. **Connecting Sheets, Forms, and Gmail**
-
-### a. ✅ Send Email from a Sheet
-
-```javascript
-function sendEmailExample() {
-  const email = "someone@example.com";
-  const subject = "Hello from Apps Script";
-  const message = "This is a test email.";
-  MailApp.sendEmail(email, subject, message);
+/** ───────────────────────────────
+ * 🧾 SHOW SUMMARY
+ *───────────────────────────────*/
+function showSummary(ui, submittedRows, issues) {
+  const msg = `✅ Submitted rows: ${submittedRows.join(", ")}` +
+              (issues.length ? `\n⚠️ Issues:\n${issues.join("\n")}` : "");
+  if (ui) ui.alert(msg); else Logger.log(msg);
 }
-```
 
-> 💬 Use this to send reminders or reports automatically!
 
----
-
-### b. 📋 Connect Google Form to Sheet
-
-When a form is submitted, you can run code using the trigger `onFormSubmit(e)`
-
-```javascript
-function onFormSubmit(e) {
-  const responses = e.values; // array of submitted values
-  Logger.log("Form submitted: " + responses.join(", "));
-}
-```
-
-Set up this function as a trigger:
-
-* In Apps Script: **Triggers > + Add Trigger**
-* Choose: `onFormSubmit`, from spreadsheet or form
-
----
-
-### c. 🔗 Copy Data from One Sheet to Another
-
-```javascript
-function copyData() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const source = ss.getSheetByName("Sheet1");
-  const target = ss.getSheetByName("Sheet2");
-
-  const data = source.getRange("A2:B10").getValues();
-  target.getRange("A2:B10").setValues(data);
-}
-```
-
----
