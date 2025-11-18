@@ -261,12 +261,18 @@ function autoSubmitAtNight() {
 
   // Step 2️⃣: Write all updates in batch
   const lastRow = data.length + 7;
+  // Step 2️⃣: Write all updates in batch
   sheet.getRange("B8:B" + lastRow).setValues(updatesB);
   sheet.getRange("C8:C" + lastRow).setValues(updatesC);
   sheet.getRange("D8:D" + lastRow).setValues(updatesD);
   sheet.getRange("E8:E" + lastRow).setValues(updatesE);
   sheet.getRange("F8:F" + lastRow).setValues(updatesF);
   sheet.getRange("J8:J" + lastRow).setValues(updatesJ);
+
+// ✅ Force Google Sheets to finish writing before re-reading
+SpreadsheetApp.flush();
+Utilities.sleep(300);
+
 
   if (!anyTodayRow) {
     Logger.log("No rows for today found, skipping auto-submit.");
@@ -344,6 +350,14 @@ function onEdit(e) {
       }
     }
   }
+}
+function createDailyAutoSubmitTrigger() {
+  ScriptApp.newTrigger("autoSubmitAtNight")
+    .timeBased()
+    .everyDays(1)
+    .atHour(17)
+    .nearMinute(30)
+    .create();
 }
 
 
